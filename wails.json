@@ -1,0 +1,32 @@
+{
+  "name": "demo",
+  "assetdir": "frontend/dist",
+  "frontend:build": "npm run build -w js",
+  "frontend:install": "npm install",
+  "frontend:dev": "",
+  "frontend:dev:watcher": "npm run build:watch -w js",
+  "wailsjsdir": "./frontend",
+  "version": "2",
+  "Path": "",
+  "BuildDir": "",
+  "outputfilename": "demo",
+  "OutputType": "",
+  "Platform": "",
+  "runNonNativeBuildHooks": false,
+  "postBuildHooks": null,
+  "Author": {
+    "name": "atao",
+    "email": "luotao954@gmail.com"
+  },
+  "Info": {
+    "companyName": "demo",
+    "productName": "demo",
+    "productVersion": "1.0.0",
+    "copyright": "Copyright.........",
+    "comments": "Built using Wails (https://wails.app)"
+  },
+  "debounceMS": 1500,
+  "devserverurl": "http://localhost:34115",
+  "appargs": "",
+  "nsisType": ""
+}
