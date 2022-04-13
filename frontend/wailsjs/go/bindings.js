@@ -5,6 +5,13 @@ const go = {
   "main": {
     "App": {
       /**
+       * Ctx
+       * @returns {Promise<models.Context>}  - Go Type: context.Context
+       */
+      "Ctx": () => {
+        return window.go.main.App.Ctx();
+      },
+      /**
        * Greet
        * @param {string} arg1 - Go Type: string
        * @returns {Promise<string>}  - Go Type: string

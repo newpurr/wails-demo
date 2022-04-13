@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"embed"
 	"github.com/wailsapp/wails/v2/pkg/menu"
 	"github.com/wailsapp/wails/v2/pkg/menu/keys"
@@ -28,15 +27,6 @@ func main() {
 
 	// Create application with options
 	// 使用选项创建应用
-	myMenu := menu.NewMenuFromItems(
-		menu.SubMenu("File", menu.NewMenuFromItems(
-			menu.Separator(),
-			menu.Text("Quit", keys.CmdOrCtrl("q"), func(_ *menu.CallbackData) {
-				runtime.Quit(context.Background())
-			}),
-		)),
-	)
-
 	err := wails.Run(&options.App{
 		Title:             "demo",
 		Width:             900,
@@ -52,14 +42,21 @@ func main() {
 		HideWindowOnClose: false,
 		RGBA:              &options.RGBA{R: 255, G: 255, B: 255, A: 0},
 		Assets:            assets,
-		Menu:              myMenu,
-		Logger:            nil,
-		LogLevel:          logger.DEBUG,
-		OnStartup:         app.startup,
-		OnDomReady:        app.domReady,
-		OnBeforeClose:     app.beforeClose,
-		OnShutdown:        app.shutdown,
-		WindowStartState:  options.Normal,
+		Menu: menu.NewMenuFromItems(
+			menu.SubMenu("WailsDemo", menu.NewMenuFromItems(
+				menu.Separator(),
+				menu.Text("Quit", keys.CmdOrCtrl("q"), func(_ *menu.CallbackData) {
+					runtime.Quit(app.Ctx())
+				}),
+			)),
+		),
+		Logger:           nil,
+		LogLevel:         logger.DEBUG,
+		OnStartup:        app.startup,
+		OnDomReady:       app.domReady,
+		OnBeforeClose:    app.beforeClose,
+		OnShutdown:       app.shutdown,
+		WindowStartState: options.Normal,
 		Bind: []interface{}{
 			app,
 		},
@@ -75,15 +72,15 @@ func main() {
 		// Mac platform specific options
 		// Mac平台特定选项
 		Mac: &mac.Options{
-			//TitleBar: &mac.TitleBar{
-			//	TitlebarAppearsTransparent: true,
-			//	HideTitle:                  false,
-			//	HideTitleBar:               false,
-			//	FullSizeContent:            false,
-			//	UseToolbar:                 false,
-			//	HideToolbarSeparator:       false,
-			//},
-			TitleBar:             mac.TitleBarDefault(),
+			TitleBar: &mac.TitleBar{
+				TitlebarAppearsTransparent: false,
+				HideTitle:                  true,
+				HideTitleBar:               true,
+				FullSizeContent:            false,
+				UseToolbar:                 false,
+				HideToolbarSeparator:       false,
+			},
+			//TitleBar:             mac.TitleBarDefault(),
 			Appearance:           mac.NSAppearanceNameAqua,
 			WebviewIsTransparent: false,
 			WindowIsTranslucent:  false,

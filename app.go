@@ -10,6 +10,10 @@ type App struct {
 	ctx context.Context
 }
 
+func (a *App) Ctx() context.Context {
+	return a.ctx
+}
+
 // NewApp creates a new App application struct
 // NewApp 创建一个新的 App 应用程序
 func NewApp() *App {
