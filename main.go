@@ -1,7 +1,11 @@
 package main
 
 import (
+	"context"
 	"embed"
+	"github.com/wailsapp/wails/v2/pkg/menu"
+	"github.com/wailsapp/wails/v2/pkg/menu/keys"
+	"github.com/wailsapp/wails/v2/pkg/runtime"
 	"log"
 
 	"github.com/wailsapp/wails/v2"
@@ -24,6 +28,15 @@ func main() {
 
 	// Create application with options
 	// 使用选项创建应用
+	myMenu := menu.NewMenuFromItems(
+		menu.SubMenu("File", menu.NewMenuFromItems(
+			menu.Separator(),
+			menu.Text("Quit", keys.CmdOrCtrl("q"), func(_ *menu.CallbackData) {
+				runtime.Quit(context.Background())
+			}),
+		)),
+	)
+
 	err := wails.Run(&options.App{
 		Title:             "demo",
 		Width:             900,
@@ -39,7 +52,7 @@ func main() {
 		HideWindowOnClose: false,
 		RGBA:              &options.RGBA{R: 255, G: 255, B: 255, A: 0},
 		Assets:            assets,
-		Menu:              nil,
+		Menu:              myMenu,
 		Logger:            nil,
 		LogLevel:          logger.DEBUG,
 		OnStartup:         app.startup,
@@ -62,17 +75,18 @@ func main() {
 		// Mac platform specific options
 		// Mac平台特定选项
 		Mac: &mac.Options{
-			TitleBar: &mac.TitleBar{
-				TitlebarAppearsTransparent: true,
-				HideTitle:                  true,
-				HideTitleBar:               false,
-				FullSizeContent:            true,
-				UseToolbar:                 false,
-				HideToolbarSeparator:       false,
-			},
-			Appearance:           mac.NSAppearanceNameDarkAqua,
-			WebviewIsTransparent: true,
-			WindowIsTranslucent:  true,
+			//TitleBar: &mac.TitleBar{
+			//	TitlebarAppearsTransparent: true,
+			//	HideTitle:                  false,
+			//	HideTitleBar:               false,
+			//	FullSizeContent:            false,
+			//	UseToolbar:                 false,
+			//	HideToolbarSeparator:       false,
+			//},
+			TitleBar:             mac.TitleBarDefault(),
+			Appearance:           mac.NSAppearanceNameAqua,
+			WebviewIsTransparent: false,
+			WindowIsTranslucent:  false,
 			About: &mac.AboutInfo{
 				Title:   "Wails Template Vue",
 				Message: "A Wails template based on Vue and Vue-Router",

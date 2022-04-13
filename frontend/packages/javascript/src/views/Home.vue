@@ -32,13 +32,13 @@ export default {
   },
   data(){
     return {
-      btnText:"点我"
+      btnText:"点我访问go后端"
     }
   },
   methods: {
     greet(name) {
       go.main.App.Greet(name).then((result) => {
-        this.btnText = result;
+        this.btnText = "go后端返回:" + result;
         console.log(result);
       });
     }
